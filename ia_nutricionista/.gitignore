@@ -1,0 +1,47 @@
+# Arquivos de ambiente (NUNCA fazer commit!)
+.env
+*.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Ambientes virtuais
+venv/
+env/
+ENV/
+.venv
+
+# Poetry
+poetry.lock
+
+# Banco de dados
+*.db
+*.sqlite
+*.sqlite3
+db.json
+*.session
+*.session-journal
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Armazenamento local
+storage/
+
+# Build
+build/
+dist/
+*.egg-info/
