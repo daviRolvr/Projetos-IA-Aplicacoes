@@ -53,15 +53,11 @@ graph TD
 
 - **FoodImageAnalyzerTool**:
   - **Função**: Analisa imagens de pratos de comida enviadas pelo usuário.
-  - **Descrição**: Utiliza o modelo de captioning **BLIP** para gerar descrições das imagens localmente. Em seguida, emprega a **OpenAI API** para estimar informações nutricionais e criar uma tabela nutricional da refeição.
+  - **Descrição**: Utiliza o modelo de visão **GPT-4o-mini** da **OpenAI API** para analisar imagens, identificar os alimentos presentes e estimar informações nutricionais completas, gerando uma tabela nutricional detalhada da refeição.
 
 - **MealEntryTool**:
   - **Função**: Registra refeições consumidas pelo usuário, armazenando detalhes nutricionais.
   - **Descrição**: Coleta informações sobre as refeições, como descrição dos alimentos, calorias, carboidratos, proteínas e gorduras. Se alguma informação estiver faltando, interage com o usuário para obtê-la antes de registrar no banco de dados.
-
-- **ReminderTool**:
-  - **Função**: Agenda lembretes personalizados para o usuário.
-  - **Descrição**: Permite que o usuário configure lembretes para ações como horários de refeições, ingestão de água, suplementações ou exercícios. Os lembretes podem ser únicos ou recorrentes, e o sistema envia notificações nos horários agendados.
 
 - **ReportTool**:
   - **Função**: Gera relatórios detalhados sobre o progresso do usuário.
@@ -75,7 +71,7 @@ graph TD
 
 **OpenAI API**: Serviço que fornece modelos de linguagem avançados utilizados tanto pelo **Agente Nutricionista** quanto pelas **Tools**. É fundamental para o processamento de linguagem natural, permitindo que o agente compreenda as solicitações dos usuários e gere respostas contextuais e coerentes.
 
-**Modelos de visão**: Tecnologia empregada pelo **FoodImageAnalyzerTool** para processar imagens. O modelo de visão gera descrições detalhadas das imagens de pratos de comida enviadas pelos usuários, servindo como base para a análise nutricional subsequente realizada pelo agente.
+**Modelos de visão**: O modelo **GPT-4o-mini** da OpenAI é empregado pelo **FoodImageAnalyzerTool** para processar imagens. O modelo de visão analisa as imagens de pratos de comida enviadas pelos usuários, identificando alimentos e gerando análises nutricionais detalhadas.
 
 ### Arquitetura do Banco de Dados
 
@@ -83,11 +79,12 @@ graph TD
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Python 3.12+**: Linguagem principal do projeto.
-- **LangChain**: Framework para construção de agentes conversacionais.
-- **OpenAI API**: Fornece os modelos de linguagem como o `gpt-4o-mini`.
+- **Python 3.11+**: Linguagem principal do projeto.
+- **LangChain**: Framework para construção de agentes conversacionais (utilizando `langchain-classic` e `langchain-core` para compatibilidade com LangChain 2.0+).
+- **OpenAI API**: Fornece os modelos de linguagem como o `gpt-4o-mini` e modelos de visão.
 - **TinyDB**: Banco de dados NoSQL em formato JSON para persistência de dados.
 - **Pyrogram**: Biblioteca para interação com a API do Telegram.
+- **Poetry**: Gerenciador de dependências e ambientes virtuais.
 - **Docker**: Para containerização e fácil implantação da aplicação.
 
 ## ✨ Features
@@ -96,7 +93,6 @@ graph TD
 - **Análise de Imagens**: Envie uma foto de um prato de comida e receba uma tabela nutricional estimada.
 - **Registro de Peso**: Registre seu peso regularmente; o agente armazenará essas informações para analisar seu progresso ao longo do tempo.
 - **Registro de Alimentações**: Mantenha um diário alimentar registrando suas refeições, permitindo um acompanhamento detalhado da sua dieta.
-- **Lembretes Personalizados**: Configure lembretes para receber notificações do agente nos horários das suas refeições ou suplementações.
 - **Relatórios Semanais**: Receba um relatório semanal detalhado sobre seu desempenho, incluindo análises da sua alimentação, ingestão nutricional e progresso em direção aos seus objetivos.
 - **Orientação Personalizada**: Respostas e conselhos adaptados aos seus objetivos e preferências individuais.
 - **Memória Persistente**: Histórico de conversas e dados armazenados para futuras interações e análises.
@@ -104,11 +100,12 @@ graph TD
 
 ## ⚙️ Pré-requisitos
 
-- **Python 3.12+** instalado.
+- **Python 3.11+** instalado.
 - **Docker** instalado (opcional, se optar por executar com Docker).
 - **Chave de API da OpenAI**.
 - **Credenciais de API do Telegram** (API ID, API Hash e Bot Token).
 
+## OBS: A Classe reminder nao foi implementada
 
 ## 🚀 Instalação e Execução
 
@@ -151,25 +148,27 @@ graph TD
    cd ia-nutricionista
    ```
 
-2. **Crie e ative um ambiente virtual:**
+2. **Instale o Poetry (se ainda não tiver):**
 
    ```bash
-   python3 -m venv venv # No Linux
-   ```
-
-   ```bash
-   source venv/bin/activate  # No Windows
+   curl -sSL https://install.python-poetry.org | python3 -
    ```
 
 3. **Instale as dependências:**
 
    ```bash
-   pip install -r requirements.txt
+   poetry install
    ```
 
-4. **Configure as variáveis de ambiente:**
+4. **Ative o ambiente virtual:**
 
-   Crie um arquivo `.env` na raiz do projeto com as seguintes informações:
+   ```bash
+   poetry shell
+   ```
+
+5. **Configure as variáveis de ambiente:**
+
+   Crie um arquivo `.env` na raiz do projeto com as seguintes informações (use o `.env.example` como referência):
 
    ```env
    OPENAI_API_KEY=your_openai_api_key
@@ -179,7 +178,7 @@ graph TD
    TELEGRAM_BOT_NAME=your_telegram_bot_name
    ```
 
-5. **Execute a aplicação:**
+6. **Execute a aplicação:**
 
    ```bash
    python nutritionist/app.py
@@ -188,4 +187,5 @@ graph TD
 ## 📚 Extras
 
 - **Armazenamento de Imagens**: As imagens enviadas pelos usuários serão salvas na pasta `storage` na raiz do projeto.
-- **Requisitos Adicionais**: Certifique-se de que as variaveis de ambiente sejam inseridas no seu `.env` assim como está no `.env-example` 
+- **Requisitos Adicionais**: Certifique-se de que as variáveis de ambiente sejam inseridas no seu `.env` assim como está no `.env.example`.
+- **Gerenciamento de Dependências**: Este projeto usa Poetry. Use `poetry add <package>` para adicionar novas dependências. 
