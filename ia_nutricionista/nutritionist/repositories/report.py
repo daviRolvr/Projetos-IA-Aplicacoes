@@ -5,6 +5,7 @@ from tinydb import Query
 from nutritionist.models import Report
 from nutritionist.repositories.base_repository import BaseRepository
 
+##Todos os repositórios devem herdar de BaseRepository, que é responsável por fornecer a conexão com o banco de dados e as operações básicas de CRUD. 
 
 class ReportRepository(BaseRepository):
     def __init__(self):
