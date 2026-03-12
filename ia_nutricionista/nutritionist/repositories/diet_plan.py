@@ -4,6 +4,7 @@ import json
 from nutritionist.repositories.base_repository import BaseRepository
 from nutritionist.models import DietPlan
 
+##Todos os repositórios devem herdar de BaseRepository, que é responsável por fornecer a conexão com o banco de dados e as operações básicas de CRUD. 
 
 class DietPlanRepository(BaseRepository):
     def __init__(self):
