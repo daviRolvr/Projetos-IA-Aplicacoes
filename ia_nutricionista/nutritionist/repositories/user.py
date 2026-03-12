@@ -3,11 +3,12 @@ from tinydb import Query
 from nutritionist.models import User
 from nutritionist.repositories.base_repository import BaseRepository
 
+##O UserRepository é responsável por gerenciar as operações relacionadas aos usuários no banco de dados. Ele herda da classe BaseRepository, que fornece a conexão com o banco de dados e métodos básicos para acessar as tabelas.
 class UserRepository(BaseRepository):
     def __init__(self):
         super().__init__()
         self.user_table = self.get_table('users')
-
+##Cria um novo usuário com os dados fornecidos e insere no banco de dados
     def create_user(
         self,
         telegram_id: int,
@@ -19,6 +20,7 @@ class UserRepository(BaseRepository):
         has_diabetes: str,
         goal: str
     ) -> User:
+##instacia o modelo/objeto User com os dados fornecidos e insere no banco de dados.
         user = User(
             telegram_id=telegram_id,
             name=name,
@@ -31,7 +33,7 @@ class UserRepository(BaseRepository):
         )
         self.user_table.insert(user.model_dump())
         return user
-
+##funçoes
     def get_user_by_id(self, user_id: int) -> Optional[User]:
         UserQuery = Query()
         result = self.user_table.get(UserQuery.id == user_id)
