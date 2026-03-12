@@ -1,6 +1,9 @@
 from langchain_classic.memory import ConversationBufferMemory
 from langchain_community.chat_message_histories import SQLChatMessageHistory
 
+#Guarda o histórico de mensagens do chat em um banco de dados SQLite usando SQLChatMessageHistory. 
+#O ConversationBufferMemory é usado para armazenar as mensagens em memória e retornar as mensagens quando necessário. 
+#O MEMORY_KEY é a chave usada para acessar o histórico de mensagens no ConversationBufferMemory.
 
 MEMORY_KEY = 'chat_history'
 
