@@ -9,7 +9,13 @@ readme = "README.md"
 requires-python = ">=3.11,<4.0"
 dependencies = [
     "pydantic (>=2.12.5,<3.0.0)",
-    "tinydb (>=4.8.2,<5.0.0)"
+    "tinydb (>=4.8.2,<5.0.0)",
+    "langchain-community (>=0.4.1,<0.5.0)",
+    "langchainhub (>=0.1.21,<0.2.0)",
+    "langgraph (>=1.1.1,<2.0.0)",
+    "langchain-openai (>=1.1.11,<2.0.0)",
+    "langchain (>=1.2.12,<2.0.0)",
+    "langchain-core (>=1.2.18,<2.0.0)"
 ]
 
 
