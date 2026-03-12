@@ -5,6 +5,8 @@ from datetime import datetime
 from nutritionist.models import MealEntry
 from nutritionist.repositories.base_repository import BaseRepository
 
+##Todos os repositórios devem herdar de BaseRepository, que é responsável por fornecer a conexão com o banco de dados e as operações básicas de CRUD. 
+
 class MealEntryRepository(BaseRepository):
     def __init__(self):
         super().__init__()
